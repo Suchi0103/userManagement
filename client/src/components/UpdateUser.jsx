@@ -46,7 +46,7 @@ function UpdateUser () {
     }
 
     return (
-        <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
+        <div style={{backgroundColor:'#b0bff6'}} className="d-flex vh-100 justify-content-center align-items-center">
             <div className="w-50 bg-white rounder p-3">
                 <Toaster />
                 <form onSubmit={Update}>
@@ -80,6 +80,7 @@ function UpdateUser () {
                                 setEdit(true);
                             }}/> 
                     </div>
+                    <button style={{margin: '0 10px'}} className="btn btn-secondary nb-3" onClick={()=> navigate('/')}>Back</button>
                     <button className="btn btn-success">Update</button>
                 </form>
             </div>

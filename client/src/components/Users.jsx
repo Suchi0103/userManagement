@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {FaEdit, FaTrash} from 'react-icons/fa'
 
 function Users () {
     const [users, setUsers] = useState([])
@@ -20,9 +21,9 @@ function Users () {
             .catch(err => console.log(err))
     } 
     return (
-        <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
+        <div style={{backgroundColor:'#b0bff6'}} className="d-flex vh-100 justify-content-center align-items-center">
             <div className='w-50 bg-white rounded p-3'>
-                <Link to="/add" className="btn btn-success">Add +</Link>
+                <Link to="/add" style={{backgroundColor:'#f6d1b0'}} className="btn">Add User</Link>
                 <table className="table">
                     <thead>
                         <tr>
@@ -40,11 +41,29 @@ function Users () {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phoneNumber}</td>
-                                    <td><img width="20%" src={`http://localhost:3000/${user.imageUrl}`} alt="User Image" /></td>
+                                    <td><img width="40" height="40" src={`http://localhost:3000/${user.imageUrl}`} alt="User Image" /></td>
                                     <td>
-                                        <Link to={`/update/${user._id}`} className="btn btn-success">Update</Link>
-                                        <button className="btn btn-danger" onClick={(e) => handleDelete(user._id)}>Delete</button>
+                                        <Link to={`/update/${user._id}`} >
+                                            <FaEdit />
+                                        </Link>
+                                        <span style={{margin: '0 10px'}} />
+                                        <button  onClick={(e) => handleDelete(user._id)}>
+                                            <FaTrash />
+                                        </button>
                                     </td>
+
+                                    {/* <td className="fit">
+                                        <span className="actions">
+                                            <BsFillTrashFill
+                                            className="delete-btn"
+                                            onClick={() => deleteRow(idx)}
+                                            />
+                                            <BsFillPencilFill
+                                            className="edit-btn"
+                                            onClick={() => editRow(idx)}
+                                            />
+                                        </span>
+                                    </td> */}
                                 </tr>
                             ))
                         }

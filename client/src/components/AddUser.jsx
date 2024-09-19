@@ -32,7 +32,7 @@ function AddUser () {
     }
 
     return (
-        <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
+        <div style={{backgroundColor:'#b0bff6'}} className="d-flex vh-100 justify-content-center align-items-center">
             <div className="w-50 bg-white rounder p-3">
                 <Toaster />
                 <form onSubmit={Submit}>
@@ -56,6 +56,7 @@ function AddUser () {
                         <label htmlFor="file">Upload User Image:</label>
                         <input onChange={(e)=> setImage(e.target.files[0])} type="file"/> 
                     </div>
+                    <button style={{margin: '0 10px'}} className="btn btn-secondary nb-3" onClick={()=> navigate('/')}>Back</button>
                     <button className="btn btn-success">Submit</button>
                 </form>
             </div>
