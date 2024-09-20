@@ -14,6 +14,10 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
+const port = process.env.PORT || 3000 ;
+const mongoEndpoint = process.env.MONGO_ENDPOINT || '127.0.0.1:27017';
+const mongoDbName = process.env.DATABASE_NAME || 'crud';
+
 // Import user routes
 var users = require('./routes/users');
 
@@ -27,14 +31,14 @@ app.use('/public', express.static(path.join(__dirname, 'public'))); // Serve sta
 app.use('/uploads', express.static('uploads')); // Serve uploaded files from the 'uploads' directory
 
 // Connect to MongoDB using Mongoose
-mongoose.connect(`mongodb://${process.env.MONGO_ENDPOINT}/${process.env.DATABASE_NAME}`)
+mongoose.connect(`mongodb://${mongoEndpoint}/${mongoDbName}`)
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.error("MongoDB connection error:", err));
 
 // Define API routes
 app.use('/api/user', upload.single('image'), users);
 
-// Start the server and listen on port 3000
-app.listen(3000, () => {
+// Start the server
+app.listen(port, () => {
     console.log("Server is running on port 3000!");
 });
