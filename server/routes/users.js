@@ -51,7 +51,7 @@ router.post("/addUser", (req, res) => {
     }
 })
 
-router.put("/updateUser/:id", (req, res) => {
+router.patch("/updateUser/:id", (req, res) => {
     try {
         const id = req.params.id
         userService.updateUser(id, req)

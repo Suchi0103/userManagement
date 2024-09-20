@@ -9,20 +9,38 @@ function UpdateUser () {
     const [email, setEmail] = useState();
     const [phoneNumber, setPhoneNumber] = useState();
     const [image, setImage] = useState();
+    const [path, setImagePath] = useState();
     const [edit, setEdit] = useState(false);
+    const [isFileValid, setIsFileValid] = useState(true);
     const navigate = useNavigate()
+    const baseUrl = `${import.meta.env.VITE_API_URL}`
 
     useEffect(()=> {
-        axios.get(`http://localhost:3000/api/user/getUser/${id}`)
+        axios.get(`${baseUrl}/api/user/getUser/${id}`)
             .then(result => {
                 console.log(result)
                 setName(result.data.name)
                 setEmail(result.data.email)
                 setPhoneNumber(result.data.phoneNumber)
-                setImage(result.data.imageUrl)
+                setImagePath(result.data.imageUrl)
             })
             .catch(err => console.log(err))
     }, [])
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (!['image/png', 'image/jpeg'].includes(file.type)) {
+                toast.error("Please upload a valid image file (.png or .jpg)");
+                setImage(null);
+                setIsFileValid(false);
+                return;
+            }
+            setImage(file);
+            setEdit(true);
+            setIsFileValid(true);
+        }
+    };
 
     const Update = (e) => {
         e.preventDefault()
@@ -32,9 +50,12 @@ function UpdateUser () {
         formData.append('name', name)
         formData.append('email', email)
         formData.append('phoneNumber', phoneNumber)
-        formData.append('image', image)
+        if(image)
+            formData.append('image', image)
+        else
+            formData.append('imagePath', path)
 
-        axios.put(`http://localhost:3000/api/user/updateUser/${id}`,formData)
+        axios.patch(`${baseUrl}/api/user/updateUser/${id}`,formData)
         .then(result => {
             console.log(result)
             navigate('/')
@@ -70,18 +91,19 @@ function UpdateUser () {
                         />
                     </div>
                     <div className="mb-2">
-                        {!edit && <img width="20%" src={`http://localhost:3000/${image}`} />}
+                        {!edit && <img width="20%" src={`${baseUrl}/${path}`} />}
                     </div>
                     <div className="mb-2">
                         <label htmlFor="file">Update New Image:</label>
                         <input type="file" className="form-control"
-                            onChange={(e)=> {
-                                setImage(e.target.files[0]);
-                                setEdit(true);
-                            }}/> 
+                            onChange={handleFileChange}
+                            accept=".png, .jpg, .jpeg" 
+                        /> 
                     </div>
-                    <button style={{margin: '0 10px'}} className="btn btn-secondary nb-3" onClick={()=> navigate('/')}>Back</button>
-                    <button className="btn btn-success">Update</button>
+                    <div className="d-flex justify-content-between mt-3">
+                        <button style={{margin: '0 10px'}} className="btn btn-secondary" onClick={()=> navigate('/')}>Back</button>
+                        <button className="btn btn-success" disabled={!isFileValid}>Update</button>
+                    </div>
                 </form>
             </div>
         </div>

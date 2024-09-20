@@ -5,15 +5,16 @@ import {FaEdit, FaTrash} from 'react-icons/fa'
 
 function Users () {
     const [users, setUsers] = useState([])
+    const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
     useEffect(()=> {
-        axios.get('http://localhost:3000/api/user')
+        axios.get(`${baseUrl}/api/user`)
             .then(result => setUsers(result.data))
             .catch(err => console.log(err))
     }, [])
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3000/api/user/deleteUser/${id}`)
+        axios.delete(`${baseUrl}/api/user/deleteUser/${id}`)
             .then(res => {
                 console.log(res)
                 window.location.reload()
@@ -41,7 +42,7 @@ function Users () {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phoneNumber}</td>
-                                    <td><img width="40" height="40" src={`http://localhost:3000/${user.imageUrl}`} alt="User Image" /></td>
+                                    <td><img width="40" height="40" src={`${baseUrl}/${user.imageUrl}`} alt="User Image" /></td>
                                     <td>
                                         <Link to={`/update/${user._id}`} >
                                             <FaEdit />
@@ -51,19 +52,6 @@ function Users () {
                                             <FaTrash />
                                         </button>
                                     </td>
-
-                                    {/* <td className="fit">
-                                        <span className="actions">
-                                            <BsFillTrashFill
-                                            className="delete-btn"
-                                            onClick={() => deleteRow(idx)}
-                                            />
-                                            <BsFillPencilFill
-                                            className="edit-btn"
-                                            onClick={() => editRow(idx)}
-                                            />
-                                        </span>
-                                    </td> */}
                                 </tr>
                             ))
                         }

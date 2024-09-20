@@ -1,14 +1,9 @@
 .DS_Store
 node_modules
-/dist
 
-
-server/uploads
 
 .DS_Store
 server/node_modules
-client/dist
-client/node_modules
 server/build
 
 # local env files
@@ -30,8 +25,5 @@ yarn-error.log*
 *.sln
 *.sw?
 
-server/package-lock.json
-client/package-lock.json
-client/.env
-client/package-lock.json
-server/package-lock.json
+package-lock.json
+/uploads

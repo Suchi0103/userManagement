@@ -60,14 +60,19 @@ exports.addNewUser = addNewUser;
 
 const updateUser = (id, req) => {
     return new Promise((resolve, reject) => {
-        const imageUrl = req.file && req.file.path;
+        let imageUrl = "";
+        if(req.file && req.file.path){
+            imageUrl = req.file.path
+        }else{
+            imageUrl = req.body.imagePath
+        }
         validateInputs(req, imageUrl)
         .then(()=>{
             UserModel.findByIdAndUpdate({ _id: id }, {
                 name: req.body.name,
                 email: req.body.email,
                 phoneNumber: req.body.phoneNumber,
-                imageUrl: req.file.path
+                imageUrl: imageUrl
             })
                 .then(user => {
                     resolve(user);
