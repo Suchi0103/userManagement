@@ -27,8 +27,45 @@ function AddUser () {
         }
     };
 
+    const validateEmail = (email) => {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePhoneNumber = (phoneNumber) => {
+        const phoneRegex = /^[0-9]{4,12}$/;
+        return phoneRegex.test(phoneNumber);
+    };
+
+    const validateName = (name) => {
+        const nameRegex = /^[A-Za-z ][a-zA-Z ]+[a-zA-Z]*$/;
+        return nameRegex.test(name);
+    };
+
     const Submit = (e) => {
         e.preventDefault();
+
+        // Check if any form fields are empty
+        if (!name || !email || !phoneNumber || !image) {
+            toast.error("Please fill in all fields and upload an image.");
+            return;
+        }
+
+        // Validate fields
+        if (!validateName(name)) {
+            toast.error("Name can only contain letters and spaces.");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        if (!validatePhoneNumber(phoneNumber)) {
+            toast.error("Please Enter a Valid Phone number");
+            return;
+        }
 
         const formData = new FormData();
         formData.append('name', name);

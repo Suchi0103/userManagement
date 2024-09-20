@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {FaEdit, FaTrash} from 'react-icons/fa'
+import {FaEdit, FaTrash} from 'react-icons/fa';
+import './Users.css';
 
 function Users () {
     const [users, setUsers] = useState([])
@@ -42,13 +43,19 @@ function Users () {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phoneNumber}</td>
-                                    <td><img width="40" height="40" src={`${baseUrl}/${user.imageUrl}`} alt="User Image" /></td>
+                                    <td>
+                                        <img 
+                                            className="user-image" 
+                                            src={`${baseUrl}/${user.imageUrl}`} 
+                                            alt="User Image" 
+                                        />
+                                    </td>
                                     <td>
                                         <Link to={`/update/${user._id}`} >
                                             <FaEdit />
                                         </Link>
                                         <span style={{margin: '0 10px'}} />
-                                        <button  onClick={(e) => handleDelete(user._id)}>
+                                        <button onClick={(e) => handleDelete(user._id)}>
                                             <FaTrash />
                                         </button>
                                     </td>
